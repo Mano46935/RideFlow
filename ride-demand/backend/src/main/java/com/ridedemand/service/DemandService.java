@@ -66,12 +66,11 @@ public class DemandService {
             MlPrediction p = predictions.get(i);
             double distance = Math.round(n.distanceKm() * 10) / 10.0;
             results.add(new AreaDemand(n.area().getName(), n.area().getLatitude(), n.area().getLongitude(),
-                    distance, p.expectedRides(), p.highDemandProbability()));
+                    distance, p.expectedCustomers(), p.customerProbability()));
         }
 
-        results.sort(Comparator.comparingDouble(AreaDemand::highDemandProbability).reversed()
-                .thenComparing(Comparator.comparingInt(AreaDemand::expectedRides).reversed()));
-
+            results.sort(Comparator.comparingDouble(AreaDemand::customerProbability).reversed()
+                .thenComparing(Comparator.comparingDouble(AreaDemand::expectedCustomers).reversed()));
         return new PredictResponse(results);
     }
 }

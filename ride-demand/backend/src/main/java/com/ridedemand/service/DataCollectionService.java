@@ -1,6 +1,7 @@
 package com.ridedemand.service;
 
 import com.ridedemand.dto.Dtos.ObservationRequest;
+import com.ridedemand.dto.Dtos.RideFoundRequest;
 import com.ridedemand.dto.Dtos.UnmetDemandRequest;
 import com.ridedemand.model.DriverObservation;
 import com.ridedemand.model.UnmetDemandReport;
@@ -38,6 +39,16 @@ public class DataCollectionService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Driver has not given consent");
         }
         return observationRepository.save(new DriverObservation(
-                req.driverId(), req.area(), req.vehicleType(), req.online(), req.rideOutcome()));
+                req.driverId(), req.area(), req.vehicleType(), req.online(), req.rideOutcome(),
+                req.latitude(), req.longitude()));
+    }
+
+    public DriverObservation saveRideFound(RideFoundRequest req) {
+        if (!req.consent()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Driver has not given consent");
+        }
+        return observationRepository.save(new DriverObservation(
+                req.driverId(), null, req.vehicleType(), true, "FOUND_RIDE",
+                req.latitude(), req.longitude()));
     }
 }

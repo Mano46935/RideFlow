@@ -4,13 +4,14 @@ import SearchPanel from "./components/SearchPanel.jsx";
 import ResultsList from "./components/ResultsList.jsx";
 import UnmetDemandForm from "./components/UnmetDemandForm.jsx";
 import DemandMap from "./components/DemandMap.jsx";
+import RideFoundButton from "./components/RideFoundButton.jsx";
 
 export default function App() {
-  // starting values: central Chennai, evening rush
+  // starting values: Gurugram, evening rush
   const [search, setSearch] = useState({
-    latitude: 13.08,
-    longitude: 80.27,
-    vehicle: "Bike",
+    latitude: 28.4593,
+    longitude: 77.0727,
+    vehicle: "Auto",
     time: "19:00",
   });
   const [areas, setAreas] = useState([]);
@@ -36,13 +37,15 @@ export default function App() {
     <div className="layout">
       <aside className="sidebar">
         <h1>Where should I go next?</h1>
-        <p className="subtitle">Pick your location and time to compare demand in nearby areas.</p>
+        <p className="subtitle">Estimate customers by nearby pickup area, vehicle and time.</p>
 
         <SearchPanel search={search} onChange={setSearch} onPredict={handlePredict} loading={loading} />
 
         {error && <p className="error">{error}</p>}
 
         <ResultsList areas={areas} searched={searched} />
+
+        <RideFoundButton vehicleType={search.vehicle} />
 
         <UnmetDemandForm vehicle={search.vehicle} />
       </aside>

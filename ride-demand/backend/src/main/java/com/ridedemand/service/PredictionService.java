@@ -39,4 +39,5 @@ public class PredictionService {
         }
         return response.predictions();
     }
+
 }

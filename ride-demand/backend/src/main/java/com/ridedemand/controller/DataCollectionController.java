@@ -1,6 +1,7 @@
 package com.ridedemand.controller;
 
 import com.ridedemand.dto.Dtos.ObservationRequest;
+import com.ridedemand.dto.Dtos.RideFoundRequest;
 import com.ridedemand.dto.Dtos.UnmetDemandRequest;
 import com.ridedemand.service.DataCollectionService;
 import jakarta.validation.Valid;
@@ -36,6 +37,12 @@ public class DataCollectionController {
     @PostMapping("/observations")
     public ResponseEntity<Map<String, Object>> addObservation(@Valid @RequestBody ObservationRequest request) {
         var saved = service.saveObservation(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("id", saved.getId()));
+    }
+
+    @PostMapping("/observations/ride-found")
+    public ResponseEntity<Map<String, Object>> reportRideFound(@Valid @RequestBody RideFoundRequest request) {
+        var saved = service.saveRideFound(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("id", saved.getId()));
     }
 }

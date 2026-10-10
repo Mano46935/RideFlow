@@ -1,7 +1,4 @@
-"""
-Feature building lives in one place so training and prediction
-always create the features the exact same way.
-"""
+
 import pandas as pd
 
 FEATURES = ["area_code", "vehicle_code", "hour", "day_of_week", "month", "past_demand"]
@@ -22,7 +19,7 @@ def make_features(df, art):
     out["day_of_week"] = df["day_of_week"]
     out["month"] = df["month"]
 
-    # average rides seen before for this area + vehicle + hour
+    # average customers seen before for this area + vehicle + hour
     keys = zip(df["area"], df["vehicle"], df["hour"])
     out["past_demand"] = [art["past_demand"].get(k, art["global_mean"]) for k in keys]
 

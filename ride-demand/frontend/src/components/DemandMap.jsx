@@ -37,10 +37,10 @@ export default function DemandMap({ driver, areas }) {
         <CircleMarker
           key={a.area}
           center={[a.latitude, a.longitude]}
-          radius={10 + a.expectedRides * 1.5}
+          radius={10 + a.expectedCustomers * 1.5}
           pathOptions={{
-            color: demandColor(a.highDemandProbability),
-            fillColor: demandColor(a.highDemandProbability),
+            color: demandColor(a.customerProbability),
+            fillColor: demandColor(a.customerProbability),
             fillOpacity: 0.45,
             weight: 2,
           }}
@@ -48,7 +48,7 @@ export default function DemandMap({ driver, areas }) {
           <Popup>
             <strong>{a.area}</strong>
             <br />
-            {a.expectedRides} rides &middot; {Math.round(a.highDemandProbability * 100)}% chance of high demand
+            {a.expectedCustomers.toFixed(2)} expected customers this hour &middot; {Math.round(a.customerProbability * 100)}% chance
           </Popup>
         </CircleMarker>
       ))}

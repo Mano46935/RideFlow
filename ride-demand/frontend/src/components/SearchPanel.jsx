@@ -1,4 +1,4 @@
-const VEHICLES = ["Bike", "Auto", "Mini", "Sedan"];
+const VEHICLES = ["Auto", "Bike", "eBike", "Go Mini", "Go Sedan", "Premier Sedan", "Uber XL"];
 
 export default function SearchPanel({ search, onChange, onPredict, loading }) {
   // update one field without touching the others
@@ -60,7 +60,7 @@ export default function SearchPanel({ search, onChange, onPredict, loading }) {
       </div>
 
       <button type="button" className="primary" onClick={onPredict} disabled={loading}>
-        {loading ? "Predicting..." : "Predict demand"}
+        {loading ? "Estimating..." : "Estimate customers"}
       </button>
     </section>
   );

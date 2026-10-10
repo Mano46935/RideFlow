@@ -27,3 +27,13 @@ export function predictDemand({ latitude, longitude, vehicle, time }) {
 export function reportUnmetDemand({ userId, area, vehicleType }) {
   return post("/api/reports/unmet-demand", { area, vehicleType }, { "X-User-Id": userId });
 }
+
+export function reportRideFound({ driverId, vehicleType, latitude, longitude }) {
+  return post("/api/observations/ride-found", {
+    driverId,
+    vehicleType,
+    latitude,
+    longitude,
+    consent: true,
+  });
+}

@@ -1,8 +1,4 @@
-"""
-Small API around the saved model. Spring Boot calls this.
 
-    uvicorn predict_service:app --port 8000
-"""
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
@@ -17,8 +13,7 @@ app = FastAPI(title="Ride Demand ML Service")
 try:
     art = joblib.load(MODEL_PATH)
 except FileNotFoundError:
-    art = None  # we'll complain when someone actually asks for a prediction
-
+    art = None  
 
 class Item(BaseModel):
     area: str
@@ -47,7 +42,7 @@ def predict(req: PredictRequest):
     df = pd.DataFrame([item.model_dump() for item in req.items])
     X = make_features(df, art)
 
-    rides = art["reg"].predict(X)
+    customers = art["reg"].predict(X)
     if art["clf"] is not None:
         probs = art["clf"].predict_proba(X)[:, 1]
     else:
@@ -56,9 +51,9 @@ def predict(req: PredictRequest):
     return {
         "predictions": [
             {
-                "expected_rides": max(0, round(float(r))),
-                "high_demand_probability": round(float(p), 2),
+                "expected_customers": round(max(0.0, float(r)), 3),
+                "customer_probability": round(float(p), 3),
             }
-            for r, p in zip(rides, probs)
+            for r, p in zip(customers, probs)
         ]
     }
